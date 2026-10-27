@@ -60,3 +60,104 @@ class GestorDeTareas {
     }
   }
 }
+
+// --- MANIPULACIÓN DEL DOM E INTERACCIÓN ---
+const gestor = new GestorDeTareas();
+
+// Seleccionamos elementos del DOM
+const taskInput = document.getElementById('taskInput');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const taskList = document.getElementById('taskList');
+const errorMsg = document.getElementById('errorMsg');
+
+// Función flecha para renderizar las tareas en la interfaz
+const renderizarTareas = () => {
+  taskList.innerHTML = '';
+
+  if (gestor.tareas.length === 0) {
+    taskList.innerHTML = '<p style="text-align: center; color: #94a3b8; padding: 20px;">No hay tareas pendientes.</p>';
+    return;
+  }
+
+  // Ciclo forEach obligatorio por la actividad
+  gestor.tareas.forEach(tarea => {
+    const li = document.createElement('li');
+    li.className = `task-item ${tarea.completada ? 'completed' : ''}`;
+
+    // Uso de Template Literals para generar el HTML dinámico
+    li.innerHTML = `
+      <div class="task-info">
+        <input type="checkbox" ${tarea.completada ? 'checked' : ''} data-id="${tarea.id}" class="chk-status">
+        <span>${tarea.nombre}</span>
+      </div>
+      <div class="task-actions">
+        <button class="btn-edit" data-id="${tarea.id}">Editar</button>
+        <button class="btn-delete" data-id="${tarea.id}">Eliminar</button>
+      </div>
+    `;
+
+    taskList.appendChild(li);
+  });
+};
+
+// Evento para Agregar Tarea con validación
+const manejarAgregarTarea = () => {
+  const textoTarea = taskInput.value.trim();
+
+  // Validación de entrada vacía requerida por la rúbrica
+  if (textoTarea === '') {
+    errorMsg.textContent = 'Por favor, escribe el nombre de la tarea.';
+    return;
+  }
+
+  errorMsg.textContent = '';
+  gestor.agregarTarea(textoTarea);
+  taskInput.value = '';
+  renderizarTareas();
+};
+
+// Eventos mediante funciones flecha
+addTaskBtn.addEventListener('click', manejarAgregarTarea);
+
+taskInput.addEventListener('keypress', (e) => {
+  if (e.key === 'Enter') {
+    manejarAgregarTarea();
+  }
+});
+
+// Delegación de eventos para los botones de la lista (Completar, Editar, Eliminar)
+taskList.addEventListener('click', (e) => {
+  const id = e.target.dataset.id;
+
+  if (!id) return;
+
+  // Botón Eliminar
+  if (e.target.classList.contains('btn-delete')) {
+    gestor.eliminarTarea(id);
+    renderizarTareas();
+  }
+
+  // Botón Editar
+  if (e.target.classList.contains('btn-edit')) {
+    const tareaActual = gestor.tareas.find(t => t.id === id);
+    const nuevoTexto = prompt('Edita el nombre de tu tarea:', tareaActual.nombre);
+    
+    if (nuevoTexto !== null) {
+      if (nuevoTexto.trim() === '') {
+        alert('El nombre de la tarea no puede estar vacío.');
+        return;
+      }
+      gestor.editarTarea(id, nuevoTexto.trim());
+      renderizarTareas();
+    }
+  }
+
+  // Checkbox de Estado
+  if (e.target.classList.contains('chk-status')) {
+    gestor.cambiarEstado(id);
+    renderizarTareas();
+  }
+});
+
+// Inicializar la aplicación renderizando al cargar la página
+document.addEventListener('DOMContentLoaded', renderizarTareas);
