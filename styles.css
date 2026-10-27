@@ -44,3 +44,102 @@ header p {
   gap: 10px;
   margin-bottom: 8px;
 }
+
+.task-form input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.task-form input:focus {
+  border-color: #0284c7;
+}
+
+.btn-add {
+  background-color: #0284c7;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-add:hover {
+  background-color: #0369a1;
+}
+
+.error-message {
+  color: #dc2626;
+  font-size: 0.85rem;
+  margin-bottom: 15px;
+  min-height: 18px;
+}
+
+.task-list {
+  list-style: none;
+  max-height: 350px;
+  overflow-y: auto;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f8fafc;
+  padding: 12px 15px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border-left: 4px solid #0284c7;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+}
+
+.task-item.completed span {
+  text-decoration: line-through;
+  color: #94a3b8;
+}
+
+.task-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.task-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.btn-edit, .btn-delete {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-edit {
+  background-color: #e2e8f0;
+  color: #475569;
+}
+
+.btn-edit:hover {
+  background-color: #cbd5e1;
+}
+
+.btn-delete {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.btn-delete:hover {
+  background-color: #fecaca;
+}
