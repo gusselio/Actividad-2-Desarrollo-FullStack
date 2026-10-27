@@ -14,5 +14,21 @@
         </header>
     </div>
     
+    <!-- Formulario para agregar tareas -->
+    <div class="task-form">
+      <input type="text" id="taskInput" placeholder="¿Qué tarea deseas agregar hoy?" autocomplete="off">
+      <button id="addTaskBtn" class="btn-add">Agregar Tarea</button>
+    </div>
+    <div id="errorMsg" class="error-message"></div>
+
+    <!-- Lista donde se renderizarán las tareas dinámicamente -->
+    <ul id="taskList" class="task-list">
+      <!-- Las tareas se insertarán aquí por JavaScript -->
+    </ul>
+  </div>
+
+  <!-- Enlace al archivo JavaScript -->
+  <script src="app.js"></script>
+
 </body>
 </html>
